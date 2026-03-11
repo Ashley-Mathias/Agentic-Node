@@ -133,6 +133,39 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Download buttons for table CSV and chart PNG */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.625rem;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--layout-transition-fast), color var(--layout-transition-fast),
+    border-color var(--layout-transition-fast);
+}
+
+.btn-download:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.btn-download:active {
+  transform: scale(0.97);
+}
+
+.btn-download svg {
+  flex-shrink: 0;
+}
+
 .bubble .bubble-sql {
   margin-top: 1rem;
   font-family: "Consolas", "Monaco", ui-monospace, monospace;

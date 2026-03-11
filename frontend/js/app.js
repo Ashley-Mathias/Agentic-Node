@@ -5,6 +5,7 @@ import { getApiBase } from "./config.js";
 import * as api from "./api.js";
 import * as chatUI from "./chatUI.js";
 import { initInputBar } from "./inputBar.js";
+import { initDownloadHandlers } from "./messageRenderer.js";
 
 const messagesEl = document.getElementById("messages");
 const messageInput = document.getElementById("messageInput");
@@ -12,6 +13,7 @@ const sendBtn = document.getElementById("sendBtn");
 const fileInput = document.getElementById("fileInput");
 
 chatUI.initChatUI(messagesEl);
+initDownloadHandlers(messagesEl);
 
 /** Session context: last N user/assistant messages for this chat (cleared on New chat). */
 const conversationHistory = [];
