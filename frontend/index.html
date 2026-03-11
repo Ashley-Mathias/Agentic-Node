@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Data Analyst & HR Knowledge Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Backend API URL: change this if your backend runs on a different host or port -->
+  <script>
+    window.API_BASE = "http://localhost:8000";
+  </script>
+
+  <div class="chat-layout">
+    <header class="chat-header">
+      <h1>AI Data Analyst & HR Knowledge Assistant</h1>
+      <p class="chat-subtitle">Ask questions or upload documents. Data and policy answers in one place.</p>
+    </header>
+
+    <div class="messages" id="messages">
+      <div class="message message-bot" id="welcomeMessage">
+        <div class="bubble">
+          <p>Ask a question in plain language (e.g. "Show employee salary distribution by department" or "What is our vacation policy?") or attach a PDF, DOCX, or TXT file to add it to the knowledge base.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.txt" class="file-input" title="Attach document" />
+      <label for="fileInput" class="btn btn-attach" title="Attach document">Attach</label>
+      <textarea id="messageInput" rows="1" placeholder="Type your question..." maxlength="2000"></textarea>
+      <button type="button" id="sendBtn" class="btn btn-send">Send</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
