@@ -9,12 +9,17 @@ A production-ready backend that combines an **AI Data Analyst** and **HR Knowled
 | Chat interface | Response with table |
 |----------------|---------------------|
 | ![Chat interface](screenshots/01-chat-interface.png) | ![Response with table](screenshots/02-response-table.png) |
-| *Welcome message, user query, and "Thinking" state.* | *Summary plus data table (e.g. salary by department).* |
+| *Welcome message, user query, and input bar.* | *Summary plus data table with Download CSV.* |
 
 | Response with chart | Attach file dialog |
 |---------------------|--------------------|
 | ![Response with chart](screenshots/03-response-chart.png) | ![Attach file dialog](screenshots/04-attach-file-dialog.png) |
-| *Bar chart from a natural language question.* | *File picker when using "Attach" for RAG documents.* |
+| *Bar chart with Download PNG.* | *File picker when using "Attach" for RAG documents.* |
+
+| Sidebar / menu |
+|----------------|
+| ![Sidebar](screenshots/05-sidebar-login.png) |
+| *Sidebar with New chat and Log out; login screen.* |
 
 ---
 
