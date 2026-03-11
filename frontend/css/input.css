@@ -1,0 +1,97 @@
+.input-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  padding: var(--input-padding-y) var(--input-padding-x) var(--content-padding-y);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.btn {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-attach {
+  background: #475569;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.4;
+  min-height: 44px;
+}
+
+.btn-attach:hover {
+  background: #334155;
+}
+
+.btn-send {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: #fff;
+  box-shadow: var(--shadow-sm), 0 2px 8px rgba(37, 99, 235, 0.25);
+  min-height: 44px;
+}
+
+.btn-send:hover:not(:disabled) {
+  box-shadow: var(--shadow-md), 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.input-bar textarea {
+  flex: 1;
+  min-height: 48px;
+  max-height: 140px;
+  padding: 0.75rem 1.125rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  resize: none;
+  line-height: 1.5;
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.input-bar textarea:hover {
+  border-color: #94a3b8;
+  background: var(--color-surface);
+}
+
+.input-bar textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  background: var(--color-surface);
+}
+
+.input-bar textarea::placeholder {
+  color: var(--color-text-muted);
+}

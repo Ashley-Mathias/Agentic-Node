@@ -13,12 +13,13 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Query"])
 
 
-def _run_pipeline(question: str) -> dict:
+def _run_pipeline(question: str, conversation_history: list) -> dict:
     """Invoke the LangGraph pipeline synchronously (called via thread-pool)."""
     graph = get_graph()
 
     initial_state = {
         "question": question,
+        "conversation_history": conversation_history,
         "intent": "",
         "db_schema": get_schema(),
         "sql_query": "",
@@ -46,7 +47,9 @@ async def query_endpoint(request: QueryRequest):
     logger.info("Received query: %s", request.question[:100])
 
     try:
-        result = await asyncio.to_thread(_run_pipeline, request.question)
+        history = [{"role": m.role, "content": m.content} for m in request.conversation_history]
+        logger.info("Conversation history length: %d messages", len(history))
+        result = await asyncio.to_thread(_run_pipeline, request.question, history)
         resp = result.get("final_response", {})
 
         return QueryResponse(

@@ -1,6 +1,24 @@
 # Frontend – AI Data Analyst & HR Knowledge Assistant
 
-Static chatbot UI that talks to the backend REST API. No build step; plain HTML, CSS, and JavaScript.
+Static chatbot UI that talks to the backend REST API. No build step; plain HTML, CSS, and JavaScript. Modular layout for easier maintenance.
+
+---
+
+## Structure
+
+| Path | Role |
+|------|------|
+| `index.html` | Shell, `window.API_BASE`, and script/style links |
+| `css/base.css` | Reset, layout, header |
+| `css/chat.css` | Messages, bubbles, table/chart/sql/error in bubbles |
+| `css/input.css` | Input bar, textarea, buttons |
+| `js/config.js` | `getApiBase()` from `window.API_BASE` |
+| `js/utils.js` | `escapeHtml()` |
+| `js/api.js` | `query(apiBase, question)`, `upload(apiBase, file)` |
+| `js/messageRenderer.js` | `buildBotContentHtml(data)` for bot bubbles |
+| `js/chatUI.js` | `initChatUI(container)`, `addUserMessage`, `addLoadingMessage`, `replaceLoadingWithResponse` |
+| `js/inputBar.js` | `initInputBar({ messageInput, sendBtn, fileInput, onSend, onUpload })` |
+| `js/app.js` | Entry: wires config, api, chatUI, inputBar (no backend changes) |
 
 ---
 
@@ -18,7 +36,7 @@ Static chatbot UI that talks to the backend REST API. No build step; plain HTML,
    Change `http://localhost:8000` if your backend runs on another host or port (e.g. `http://192.168.1.10:8000` or `https://api.example.com`).
 
 2. **Endpoints used**  
-   `app.js` calls two backend endpoints:
+   `js/api.js` is used by `js/app.js` to call two backend endpoints:
 
    | Action        | Method | URL                | Body / usage                          |
    |---------------|--------|--------------------|----------------------------------------|

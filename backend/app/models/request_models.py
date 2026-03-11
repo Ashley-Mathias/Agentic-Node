@@ -1,4 +1,11 @@
+from typing import List, Literal
+
 from pydantic import BaseModel, Field
+
+
+class ConversationMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
 
 
 class QueryRequest(BaseModel):
@@ -7,4 +14,9 @@ class QueryRequest(BaseModel):
         min_length=1,
         max_length=2000,
         description="Natural language question",
+    )
+    conversation_history: List[ConversationMessage] = Field(
+        default_factory=list,
+        max_length=20,
+        description="Recent messages in this session for context (last N turns).",
     )

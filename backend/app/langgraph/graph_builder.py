@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 class AnalystState(TypedDict, total=False):
     question: str
+    conversation_history: list
     intent: str
     db_schema: dict
     sql_query: str

@@ -7,7 +7,10 @@ logger = logging.getLogger(__name__)
 
 _SYSTEM_PROMPT = """You are an intent classifier for an AI data analyst system.
 
-Classify the user's question into exactly one category:
+You will receive the recent conversation history (if any) followed by the user's latest question.
+Use the conversation context to understand follow-up questions.
+
+Classify the user's LATEST question into exactly one category:
 
 1. "database_query" – Questions about data that require querying a database
    (analytics, reports, statistics, counts, aggregations, trends, comparisons,
@@ -16,10 +19,12 @@ Classify the user's question into exactly one category:
    documents, HR knowledge, onboarding guides, or any document-specific
    information.
 3. "general_question" – General greetings, help requests, capability questions,
-   or anything not clearly about data or documents.
+   personal/conversational questions (like asking their name), or anything
+   not clearly about data or documents.
 
 Respond with ONLY a JSON object: {"intent": "<category>"}"""
 
+_MAX_CONTEXT_FOR_INTENT = 6
 _VALID_INTENTS = {"database_query", "rag_query", "general_question"}
 
 
@@ -27,6 +32,14 @@ def classify_intent(state: dict) -> dict:
     """Classify the user's question into database_query / rag_query / general_question."""
     question = state["question"]
     logger.info("Classifying intent for: %s", question[:100])
+
+    history = state.get("conversation_history") or []
+    context_msgs = [
+        {"role": m.get("role"), "content": m.get("content", "")}
+        for m in history[-_MAX_CONTEXT_FOR_INTENT:]
+        if m.get("role") and m.get("content")
+    ]
+    logger.info("Intent classifier received %d context messages", len(context_msgs))
 
     try:
         client = get_openai_client()
@@ -37,6 +50,7 @@ def classify_intent(state: dict) -> dict:
             temperature=0.0,
             messages=[
                 {"role": "system", "content": _SYSTEM_PROMPT},
+                *context_msgs,
                 {"role": "user", "content": question},
             ],
             response_format={"type": "json_object"},

@@ -1,0 +1,181 @@
+.messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--content-padding-y) var(--content-padding-x) var(--input-padding-y);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--color-surface-alt);
+  scroll-behavior: smooth;
+}
+
+/* Constrain width so long messages don’t stretch too far; no width:100% so user bubbles can align right */
+.messages > * {
+  max-width: 720px;
+}
+
+/* Subtle scrollbar styling where supported */
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+.message {
+  display: flex;
+  max-width: 88%;
+  animation: messageIn 0.28s ease-out;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message-user {
+  align-self: flex-end;
+}
+
+.message-user .bubble {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: #fff;
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg);
+  box-shadow: var(--shadow-md), 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.message-bot {
+  align-self: flex-start;
+}
+
+.message-bot .bubble {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-sm);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.bubble {
+  padding: 1rem 1.25rem;
+  word-break: break-word;
+  line-height: 1.55;
+}
+
+.bubble p {
+  margin: 0 0 0.5rem 0;
+}
+
+.bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.bubble .bubble-table-wrap {
+  margin-top: 1rem;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+  max-width: 100%;
+  box-shadow: var(--shadow-sm);
+}
+
+.bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.bubble th,
+.bubble td {
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.bubble th {
+  background: #334155;
+  color: #fff;
+  font-weight: 600;
+}
+
+.bubble tr:hover {
+  background: var(--color-surface-alt);
+}
+
+.bubble .bubble-chart {
+  margin-top: 1rem;
+}
+
+.bubble .bubble-chart img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.bubble .bubble-sql {
+  margin-top: 1rem;
+  font-family: "Consolas", "Monaco", ui-monospace, monospace;
+  font-size: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  border: 1px solid #334155;
+}
+
+.bubble .bubble-sql-label {
+  display: block;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  opacity: 0.9;
+  color: #9ca3af;
+}
+
+.bubble .bubble-error {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  border: 1px solid #fecaca;
+}
+
+.message-loading .bubble {
+  color: var(--color-text-muted);
+}
+
+.message-loading .bubble::after {
+  content: "...";
+  animation: dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: "."; }
+  40% { content: ".."; }
+  60%, 100% { content: "..."; }
+}

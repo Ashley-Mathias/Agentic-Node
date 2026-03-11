@@ -26,6 +26,9 @@ DATABASE SCHEMA:
 {schema}"""
 
 
+_MAX_CONTEXT_FOR_SQL = 6
+
+
 def generate_sql(state: dict) -> dict:
     """Generate a PostgreSQL SELECT query from the user's natural-language question.
 
@@ -36,7 +39,14 @@ def generate_sql(state: dict) -> dict:
     schema = state.get("db_schema") or get_schema()
     schema_text = format_schema_for_llm(schema)
 
-    logger.info("Generating SQL for: %s", question[:100])
+    history = state.get("conversation_history") or []
+    context_msgs = [
+        {"role": m.get("role"), "content": m.get("content", "")}
+        for m in history[-_MAX_CONTEXT_FOR_SQL:]
+        if m.get("role") and m.get("content")
+    ]
+
+    logger.info("Generating SQL for: %s (with %d context msgs)", question[:100], len(context_msgs))
 
     try:
         client = get_openai_client()
@@ -47,6 +57,7 @@ def generate_sql(state: dict) -> dict:
             temperature=0.0,
             messages=[
                 {"role": "system", "content": _SYSTEM_PROMPT.format(schema=schema_text)},
+                *context_msgs,
                 {"role": "user", "content": question},
             ],
             response_format={"type": "json_object"},
