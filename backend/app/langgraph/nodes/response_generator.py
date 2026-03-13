@@ -29,14 +29,6 @@ Guidelines:
 - Be specific and cite relevant details.
 - Keep the answer concise but complete."""
 
-_GENERAL_PROMPT = """You are a helpful AI assistant for a data analytics and HR knowledge
-system. You can help with:
-1. Querying databases using natural language
-2. Answering questions from uploaded documents
-3. General assistance
-
-IMPORTANT – Conversation memory: You are given the recent conversation history above. Use it to answer follow-up questions. If the user previously shared their name, preferences, or any other information in this chat, you DO have access to it (it is in the history). Answer from that context—e.g. if they said "my name is X" and later ask "what is my name?", answer with their name. Do not say you lack access to information the user has already told you in this conversation."""
-
 # Max number of prior messages to send as context (avoid token overflow).
 _MAX_CONTEXT_MESSAGES = 10
 
@@ -74,7 +66,9 @@ def generate_response(state: dict) -> dict:
             return _database_response(state, client, settings)
         if intent == "rag_query":
             return _rag_response(state, client, settings)
-        return _general_response(state, client, settings)
+        if intent == "greeting":
+            return _greeting_response(state)
+        return _general_question_decline(state)
 
     except Exception as e:
         logger.exception("Response generation failed")
@@ -151,17 +145,20 @@ def _rag_response(state: dict, client, settings) -> dict:
     return {"final_response": {"type": "rag", "summary": answer}}
 
 
-def _general_response(state: dict, client, settings) -> dict:
-    messages = [
-        {"role": "system", "content": _GENERAL_PROMPT},
-        *_context_messages(state),
-        {"role": "user", "content": state["question"]},
-    ]
-    llm_resp = client.chat.completions.create(
-        model=settings.model_name,
-        temperature=0.5,
-        messages=messages,
+def _greeting_response(state: dict) -> dict:
+    """Short friendly reply for greetings only. No LLM call."""
+    summary = (
+        "Hello! I'm here to help with questions about your data and uploaded documents. "
+        "You can ask for analytics (e.g. salary by department) or ask about policies and docs you've uploaded."
     )
-    answer = llm_resp.choices[0].message.content.strip()
+    return {"final_response": {"type": "text", "summary": summary}}
 
-    return {"final_response": {"type": "text", "summary": answer}}
+
+def _general_question_decline(state: dict) -> dict:
+    """Politely decline general knowledge questions; only RAG and database queries allowed."""
+    summary = (
+        "I can only answer questions about your data (e.g. reports, analytics, trends) "
+        "and your uploaded documents (e.g. policies, HR guides). "
+        "Try something like: \"Show employee salary by department\" or \"What is our vacation policy?\""
+    )
+    return {"final_response": {"type": "text", "summary": summary}}

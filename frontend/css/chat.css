@@ -9,6 +9,7 @@
   gap: 1.5rem;
   background: var(--color-surface-alt);
   scroll-behavior: smooth;
+  border-radius: var(--radius-lg);
 }
 
 /* Constrain width so long messages don’t stretch too far; no width:100% so user bubbles can align right */
@@ -56,10 +57,10 @@
 }
 
 .message-user .bubble {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  background: var(--color-header);
   color: #fff;
   border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg);
-  box-shadow: var(--shadow-md), 0 2px 8px rgba(37, 99, 235, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .message-bot {
@@ -70,7 +71,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-sm);
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -111,7 +112,7 @@
 }
 
 .bubble th {
-  background: #334155;
+  background: var(--color-header);
   color: #fff;
   font-weight: 600;
 }

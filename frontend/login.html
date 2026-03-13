@@ -3,21 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sign in to the AI Data Analyst and HR Knowledge Assistant.">
-  <title>Sign in – AI Data Analyst & HR Knowledge Assistant</title>
+  <meta name="description" content="Sign in to Agentic Node.">
+  <title>Sign in – Agentic Node</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/login.css">
+  <!-- Agentic Node theme: dusty rose + black (inline so it always applies) -->
+  <style>
+    body { background-color: #c9a9a6 !important; background-image: url("assets/agentic_node.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; }
+    .login-layout { background-color: #c9a9a6 !important; background-image: url("assets/agentic_node.png") !important; background-size: cover !important; background-position: center !important; }
+    .login-header { background: #1a1a1a !important; color: #fff !important; }
+    .btn-login { background: #1a1a1a !important; color: #fff !important; }
+    .btn-login:hover { background: #333 !important; }
+  </style>
 </head>
 <body>
-  <main class="login-layout" role="main">
-    <div class="login-card">
-      <header class="login-header">
-        <h1>AI Data Analyst & HR Knowledge Assistant</h1>
+  <main class="login-layout" role="main" data-testid="login-layout">
+    <div class="login-card" data-testid="login-card">
+      <header class="login-header" data-testid="login-header">
+        <h1>Agentic Node</h1>
         <p class="login-subtitle">Sign in to continue</p>
       </header>
 
-      <form id="loginForm" class="login-form" novalidate>
-        <div class="form-group">
+      <form id="loginForm" class="login-form" novalidate data-testid="login-form">
+        <div class="form-group" data-testid="form-group-email">
           <label for="email">Email</label>
           <input
             type="email"
@@ -26,9 +34,10 @@
             placeholder="you@example.com"
             autocomplete="email"
             required
+            data-testid="login-email"
           >
         </div>
-        <div class="form-group">
+        <div class="form-group" data-testid="form-group-password">
           <label for="password">Password</label>
           <input
             type="password"
@@ -37,10 +46,11 @@
             placeholder="••••••••"
             autocomplete="current-password"
             required
+            data-testid="login-password"
           >
         </div>
-        <p id="loginError" class="login-error" role="alert" aria-live="polite" hidden></p>
-        <button type="submit" id="submitBtn" class="btn btn-login">Sign in</button>
+        <p id="loginError" class="login-error" role="alert" aria-live="polite" hidden data-testid="login-error"></p>
+        <button type="submit" id="submitBtn" class="btn btn-login" data-testid="login-submit">Sign in</button>
       </form>
     </div>
   </main>

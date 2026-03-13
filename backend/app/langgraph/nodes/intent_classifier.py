@@ -18,14 +18,18 @@ Classify the user's LATEST question into exactly one category:
 2. "rag_query" – Questions about company policies, procedures, uploaded
    documents, HR knowledge, onboarding guides, or any document-specific
    information.
-3. "general_question" – General greetings, help requests, capability questions,
-   personal/conversational questions (like asking their name), or anything
-   not clearly about data or documents.
+3. "greeting" – ONLY simple greetings and small talk: "hello", "hi", "hey",
+   "how are you", "good morning/afternoon/evening", "what's up", "howdy".
+   Nothing else. If the user asks for help or capabilities, that is NOT greeting.
+4. "general_question" – Anything that is not database_query, rag_query, or greeting.
+   This includes: "what is X", "explain Y", help requests, capability questions,
+   or any question that would require general knowledge. The assistant will
+   politely decline and direct the user to ask about data or documents only.
 
 Respond with ONLY a JSON object: {"intent": "<category>"}"""
 
 _MAX_CONTEXT_FOR_INTENT = 6
-_VALID_INTENTS = {"database_query", "rag_query", "general_question"}
+_VALID_INTENTS = {"database_query", "rag_query", "greeting", "general_question"}
 
 
 def classify_intent(state: dict) -> dict:

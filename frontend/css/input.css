@@ -5,8 +5,9 @@
   gap: 0.75rem;
   padding: var(--input-padding-y) var(--input-padding-x) var(--content-padding-y);
   background: var(--color-surface);
-  border-top: 1px solid var(--color-border-light);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .file-input {
@@ -40,7 +41,7 @@
 }
 
 .btn-attach {
-  background: #475569;
+  background: var(--color-header);
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -50,18 +51,19 @@
 }
 
 .btn-attach:hover {
-  background: #334155;
+  background: var(--color-primary-hover);
 }
 
 .btn-send {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  background: var(--color-header);
   color: #fff;
-  box-shadow: var(--shadow-sm), 0 2px 8px rgba(37, 99, 235, 0.25);
+  box-shadow: var(--shadow-sm);
   min-height: 44px;
 }
 
 .btn-send:hover:not(:disabled) {
-  box-shadow: var(--shadow-md), 0 4px 12px rgba(37, 99, 235, 0.3);
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .input-bar textarea {
@@ -88,7 +90,7 @@
 .input-bar textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.12);
   background: var(--color-surface);
 }
 

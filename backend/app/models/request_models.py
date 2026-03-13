@@ -20,3 +20,7 @@ class QueryRequest(BaseModel):
         max_length=20,
         description="Recent messages in this session for context (last N turns).",
     )
+    session_id: str | None = Field(
+        default=None,
+        description="If provided, user and assistant messages are persisted to this session in PostgreSQL.",
+    )

@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes_query import router as query_router
 from app.api.routes_upload import router as upload_router
+from app.api.routes_sessions import router as sessions_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,7 +41,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="AI Data Analyst & HR Knowledge Assistant",
+    title="Agentic Node",
     description=(
         "LangGraph-powered REST API for natural-language database queries, "
         "automated charting, and document-based Q&A (RAG)."
@@ -59,6 +60,7 @@ app.add_middleware(
 
 app.include_router(query_router, prefix="/api")
 app.include_router(upload_router, prefix="/api")
+app.include_router(sessions_router, prefix="/api")
 
 
 @app.get("/health")

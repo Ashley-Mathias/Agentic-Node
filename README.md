@@ -229,6 +229,24 @@ uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
   | `sql_query` | string or null | Generated SQL (for database queries) |
   | `error` | string or null | Error message if something failed |
 
+### Chat Sessions (PostgreSQL; no browser memory)
+
+All chat sessions and messages are stored in PostgreSQL. The frontend does not use browser/local storage for conversation memory.
+
+- **GET** `/api/sessions`  
+  List all chat sessions (for the sidebar), ordered by `updated_at` descending. Returns `{ "sessions": [ { "id", "title", "created_at", "updated_at" }, ... ] }`.
+
+- **POST** `/api/sessions?title=New+chat`  
+  Create a new session. Returns the new session object.
+
+- **GET** `/api/sessions/{session_id}`  
+  Get one session with all messages (for loading a conversation). Returns `{ "id", "title", "created_at", "updated_at", "messages": [ { "id", "role", "content", "payload", "created_at" }, ... ] }`.
+
+- **DELETE** `/api/sessions/{session_id}`  
+  Delete a session and all its messages from the database. When the user deletes a chat in the frontend, this is called so the deletion is synchronous with the DB.
+
+The **POST** `/api/query` body may include an optional `session_id`. When present, the backend appends the user message and assistant response (with full payload for re-rendering) to that session and updates its title from the user message.
+
 ### Upload Documents (RAG)
 
 - **POST** `/api/upload`  

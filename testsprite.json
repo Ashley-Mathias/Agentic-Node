@@ -1,0 +1,11 @@
+{
+  "projectType": "frontend",
+  "localPort": 3000,
+  "testScope": "codebase",
+  "needLogin": true,
+  "credentials": {
+    "username": "test@example.com",
+    "password": "testpassword123"
+  },
+  "_comment": "UI uses data-testid attributes for stable selectors. See frontend/TEST_IDS.md for the full list."
+}
