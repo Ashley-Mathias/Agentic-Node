@@ -28,8 +28,8 @@ jobs:
             echo "::warning::BACKEND_URL secret not set. Add your Railway backend URL in repo Settings > Secrets > Actions."
             BACKEND_URL="https://REPLACE_ME.railway.app"
           fi
-          # Replace placeholder in HTML (GitHub Pages deployment)
-          find frontend -name "*.html" -exec sed -i "s|__BACKEND_URL__|$BACKEND_URL|g" {} \;
+          # Replace only the assignment (not the fallback check) so we don't overwrite the real URL with localhost
+          find frontend -name "*.html" -exec sed -i "s|window.API_BASE = \"__BACKEND_URL__\"|window.API_BASE = \"$BACKEND_URL\"|g" {} \;
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
