@@ -13,6 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Railway injects PORT=8080 at runtime; app must listen on this port
-EXPOSE 8080
+# Railway Networking is often set to 8000 in Settings; app listens on PORT (default 8000)
+EXPOSE 8000
 CMD ["python", "-m", "run"]
