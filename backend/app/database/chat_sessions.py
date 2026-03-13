@@ -167,6 +167,28 @@ def delete_session(session_id: str) -> bool:
         session.close()
 
 
+# Max questions per session to cap LLM cost (user messages only).
+MAX_QUESTIONS_PER_SESSION = 12
+
+
+def count_user_messages(session_id: str) -> int:
+    """Return the number of user messages in this session."""
+    session = get_session()
+    try:
+        _ensure_tables(session)
+        result = session.execute(
+            text("""
+                SELECT COUNT(*) FROM chat_messages
+                WHERE session_id = :session_id AND role = 'user'
+            """),
+            {"session_id": session_id},
+        )
+        row = result.fetchone()
+        return row[0] if row else 0
+    finally:
+        session.close()
+
+
 def append_message(session_id: str, role: str, content: str, payload: dict | None = None) -> bool:
     """Append a message to a session and bump updated_at. Returns True if session exists."""
     session = get_session()

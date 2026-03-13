@@ -42,10 +42,10 @@
   </style>
 </head>
 <body>
-  <!-- API_BASE: loaded from /api/config on Vercel; fallback for local dev -->
-  <script src="/api/config"></script>
+  <!-- API_BASE: __BACKEND_URL__ replaced by GitHub Actions; local dev falls back to localhost -->
   <script>
-    window.API_BASE = window.API_BASE || "http://localhost:8000";
+    window.API_BASE = "__BACKEND_URL__";
+    if (!window.API_BASE || window.API_BASE === "__BACKEND_URL__") window.API_BASE = "http://localhost:8000";
     if (!sessionStorage.getItem("agentic_node_authenticated")) {
       window.location.replace("login.html");
     }

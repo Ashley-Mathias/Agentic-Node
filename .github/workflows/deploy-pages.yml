@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inject backend URL
+        run: |
+          BACKEND_URL="${{ secrets.BACKEND_URL }}"
+          if [ -z "$BACKEND_URL" ]; then
+            echo "::warning::BACKEND_URL secret not set. Add your Railway backend URL in repo Settings > Secrets > Actions."
+            BACKEND_URL="https://REPLACE_ME.railway.app"
+          fi
+          # Replace placeholder in HTML (GitHub Pages deployment)
+          find frontend -name "*.html" -exec sed -i "s|__BACKEND_URL__|$BACKEND_URL|g" {} \;
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

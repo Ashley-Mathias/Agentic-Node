@@ -7,7 +7,7 @@ from app.models.request_models import QueryRequest
 from app.models.response_models import QueryResponse
 from app.langgraph.graph_builder import get_graph
 from app.database.schema_loader import get_schema
-from app.database.chat_sessions import append_message
+from app.database.chat_sessions import append_message, count_user_messages, MAX_QUESTIONS_PER_SESSION
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +46,27 @@ def _run_pipeline(question: str, conversation_history: list) -> dict:
 async def query_endpoint(request: QueryRequest):
     """Process a natural-language query through the AI analysis pipeline.
     If session_id is provided, user and assistant messages are persisted to PostgreSQL.
+    Max 12 questions per session to cap LLM cost.
     """
     logger.info("Received query: %s", request.question[:100])
+
+    if request.session_id:
+        current_count = count_user_messages(request.session_id)
+        if current_count >= MAX_QUESTIONS_PER_SESSION:
+            friendly = (
+                "You've used all 12 questions in this chat. This app is a lightweight POC, "
+                "so we keep usage limited to manage costs. Start a new chat to continue."
+            )
+            return QueryResponse(
+                type="text",
+                summary=friendly,
+                chart_type=None,
+                chart_data=None,
+                chart_image=None,
+                table=None,
+                sql_query=None,
+                error=None,
+            )
 
     try:
         history = [{"role": m.role, "content": m.content} for m in request.conversation_history]

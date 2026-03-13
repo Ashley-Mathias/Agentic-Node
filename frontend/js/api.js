@@ -17,8 +17,15 @@ export function query(apiBase, question, conversationHistory = [], sessionId = n
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-  }).then((res) => {
-    if (!res.ok) throw new Error("Request failed: " + res.status);
+  }).then(async (res) => {
+    if (!res.ok) {
+      let msg = "Request failed: " + res.status;
+      try {
+        const d = await res.json();
+        if (d && (d.detail != null)) msg = typeof d.detail === "string" ? d.detail : JSON.stringify(d.detail);
+      } catch (_) {}
+      throw new Error(msg);
+    }
     return res.json();
   });
 }
