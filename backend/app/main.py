@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -20,6 +21,18 @@ async def lifespan(app: FastAPI):
     """Startup: pre-load schema and compile the LangGraph pipeline."""
     logger.info("Application starting up …")
 
+    # Fail fast on Railway if DATABASE_URL still points to localhost
+    from app.config import get_settings
+    settings = get_settings()
+    if ("localhost" in settings.database_url or "127.0.0.1" in settings.database_url) and os.environ.get("RAILWAY_ENVIRONMENT"):
+        msg = (
+            "DATABASE_URL points to localhost but the app is running on Railway. "
+            "In the Railway dashboard: open your service → Variables → add or reference DATABASE_URL "
+            "(e.g. add a Postgres service and use its DATABASE_URL variable)."
+        )
+        logger.critical(msg)
+        raise RuntimeError(msg)
+
     try:
         from app.database.schema_loader import get_schema
         schema = get_schema()
@@ -34,6 +47,13 @@ async def lifespan(app: FastAPI):
         logger.info("LangGraph pipeline compiled")
     except Exception as e:
         logger.warning("Could not compile LangGraph pipeline on startup: %s", e)
+
+    try:
+        from app.database.chat_sessions import ensure_chat_tables
+        ensure_chat_tables()
+        logger.info("Chat sessions tables ready")
+    except Exception as e:
+        logger.warning("Could not ensure chat tables on startup: %s", e)
 
     yield
 

@@ -52,6 +52,15 @@ def _ensure_tables(session):
     session.commit()
 
 
+def ensure_chat_tables():
+    """Create chat_sessions and chat_messages tables if they do not exist. Call at startup so first request is fast."""
+    session = get_session()
+    try:
+        _ensure_tables(session)
+    finally:
+        session.close()
+
+
 def list_sessions():
     """Return all chat sessions ordered by updated_at descending."""
     session = get_session()
