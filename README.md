@@ -34,6 +34,7 @@ A production-ready backend that combines an **AI Data Analyst** and **HR Knowled
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Database Setup](#database-setup)
+- [Sample database & example questions](#sample-database--example-questions)
 - [Running the Application](#running-the-application)
 - [API Reference](#api-reference)
 - [Workflows](#workflows)
@@ -173,6 +174,52 @@ Edit `backend/.env` (or `.env` in the project root if you run from there). Requi
    ```
 
    This creates tables such as `departments`, `employees`, `salaries`, `projects`, `project_assignments`, and `sales`, and populates them with sample HR and analytics data.
+
+---
+
+## Sample database & example questions
+
+This section describes **what is actually in the seeded database** (`backend/seed.sql`), **example questions** you can type in the chat, and **what results work well** (tables + charts). The app only runs **read-only `SELECT`** queries against these tables for analytics.
+
+### What’s in the data
+
+| Table | What it contains |
+|-------|------------------|
+| **departments** | 7 departments: Engineering, Human Resources, Sales, Marketing, Finance, Operations, Customer Support — each with `name`, `location` (city), and annual `budget`. |
+| **employees** | 25 employees with `first_name`, `last_name`, `email`, `department_id`, `job_title`, `hire_date`, `status` (e.g. active). |
+| **salaries** | Multiple salary rows per employee over time (`amount`, `effective_date`) — useful for “current” or historical pay questions. |
+| **projects** | 10 projects with `name`, `department_id`, dates, `budget`, `status` (active / completed). |
+| **project_assignments** | Links employees to projects with `role` and `assigned_date`. |
+| **sales** | **40** sales rows for **2024** (Jan–Aug): `employee_id`, `product`, `region`, `amount`, `quantity`, `sale_date`. |
+
+**Dimensions you can aggregate on (these match the seed data):**
+
+- **Regions:** West, East, Midwest, South  
+- **Products:** Enterprise Plan, Pro Plan, Starter Plan  
+- **Departments:** the seven listed above (linked from employees and projects)
+
+**Separate from analytics:** the app also creates **`chat_sessions`** and **`chat_messages`** in PostgreSQL for conversation history (no sample rows in `seed.sql` for those).
+
+### Example questions that work well (SQL → table + often a chart)
+
+Ask these in **natural language** after `seed.sql` has been applied. They map cleanly to `SELECT` queries and usually produce **real, verifiable results** (summary + table; often **bar**, **line**, or **pie** when the chart recommender chooses a visual):
+
+| # | Example question | Typical output |
+|---|------------------|----------------|
+| 1 | *Show total sales by region as a bar chart.* | Bar chart + table of totals for West / East / Midwest / South. |
+| 2 | *What is the department-wise budget distribution?* | Pie or bar chart + table of `budget` by department. |
+| 3 | *How many employees were hired each year?* | Bar or line chart + counts grouped by year from `hire_date`. |
+| 4 | *Show total sales amount by product.* | Bar chart + table (Enterprise / Pro / Starter). |
+| 5 | *Which departments have the most active projects?* | Bar chart + table counting projects where `status = 'active'`. |
+| 6 | *List all employees in the Sales department with their job titles.* | Table (join `employees` + `departments`). |
+| 7 | *What are total sales per month in 2024?* | Line or bar chart + table (`date_trunc('month', sale_date)`). |
+| 8 | *What is the average salary by department?* | Table or bar chart (join `employees`, `salaries`, `departments`). |
+
+**Tips:**
+
+- Prefer questions that mention **departments, employees, sales, regions, products, projects, salaries, hire dates** — they align with the schema above.
+- If you get only text with no chart, try rephrasing to ask explicitly for a **chart** or **bar chart** / **pie chart** / **line chart**.
+- For **document Q&A** (policies, HR PDFs), upload a file first, then ask about *that* content — that path uses **RAG**, not these SQL tables.
 
 ---
 
