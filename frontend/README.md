@@ -1,3 +1,4 @@
+<!-- frontend/ folder: static UI; see css/, js/, assets/ -->
 # Frontend – AI Data Analyst & HR Knowledge Assistant
 
 Static chatbot UI that talks to the backend REST API. No build step; plain HTML, CSS, and JavaScript. Modular layout for easier maintenance.

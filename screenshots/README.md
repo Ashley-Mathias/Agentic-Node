@@ -1,4 +1,5 @@
 # Screenshots
+<!-- screenshots/ — UI captures referenced from the root README -->
 
 Place the four UI screenshots here so they appear in the main README:
 

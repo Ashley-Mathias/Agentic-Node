@@ -1,3 +1,4 @@
+<!-- Agentic Node: repository root -->
 # Agentic-Node
 
 A production-ready backend that combines an **AI Data Analyst** and **HR Knowledge Assistant**. It converts natural language questions into SQL, runs queries against PostgreSQL, returns results as text, tables, and charts, and answers document-based questions via a RAG pipeline. The API is REST-only; a separate chat frontend is provided in the `frontend/` folder.
@@ -193,6 +194,38 @@ uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
 - API: `http://localhost:8000`
 - Interactive docs: `http://localhost:8000/docs`
 - Health check: `http://localhost:8000/health`
+
+---
+
+## Deploying to Railway
+
+The backend is deployed on Railway with **root directory** set to `backend` and build from the repo `Dockerfile` in `backend/`.
+
+**Required: set `DATABASE_URL`** so the app does not use localhost (which causes 502).
+
+1. In the [Railway dashboard](https://railway.app), open your **Agentic-Node** service.
+2. Go to **Variables**.
+3. **Option A – Railway Postgres**
+   - Add a **PostgreSQL** service to the same project (or use an existing one).
+   - In your backend service, click **Variables** → **New Variable** → **Add Reference**.
+   - Choose the Postgres service and select **`DATABASE_URL`**. Railway will inject the connection string.
+4. **Option B – Your own Postgres**
+   - Add a variable: name `DATABASE_URL`, value your full URL, e.g.  
+     `postgresql://user:password@host:5432/dbname`.
+5. Also set: `OPENAI_API_KEY`, and optionally `CHROMA_PERSIST_DIR`, `UPLOAD_DIR`.
+6. Redeploy (or push a commit) so the new variables are used. The app will fail on startup with a clear error if `DATABASE_URL` still points to localhost on Railway.
+
+**Seed the Railway database (tables for chat + data analyst):**
+
+The app creates `chat_sessions` and `chat_messages` on first use. To get the **data analyst** tables (departments, employees, sales, etc.) and sample data:
+
+1. In Railway, open the **Postgres** service your app uses (e.g. **Postgres-gANW**) → **Variables**.
+2. Copy **`DATABASE_PUBLIC_URL`** (the public URL so you can connect from your PC). Click the value to reveal/copy.
+3. From the project root, run (replace with your URL):
+   ```bash
+   psql "YOUR_DATABASE_PUBLIC_URL" -f backend/seed.sql
+   ```
+   On Windows, if `psql` is not in PATH, use the full path to `psql.exe` from your PostgreSQL installation, or use a GUI (e.g. pgAdmin, DBeaver) and run the contents of `backend/seed.sql` against that database.
 
 ---
 

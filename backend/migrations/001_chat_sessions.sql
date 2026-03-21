@@ -1,3 +1,4 @@
+-- migrations/ — versioned SQL for chat_sessions / chat_messages.
 -- Chat sessions and messages (memory in PostgreSQL, no browser storage)
 CREATE TABLE IF NOT EXISTS chat_sessions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

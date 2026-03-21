@@ -1,3 +1,4 @@
+# database/ — SQLAlchemy engine and session factory for PostgreSQL.
 import logging
 
 from sqlalchemy import create_engine

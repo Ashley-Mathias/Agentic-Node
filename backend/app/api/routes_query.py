@@ -1,3 +1,4 @@
+# api/ — REST handlers for /query, /upload, /sessions.
 import asyncio
 import logging
 

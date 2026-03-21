@@ -1,3 +1,4 @@
+// frontend/js/ — client-side chat application (sessions, API, UI).
 /**
  * App entry: chat sessions and memory in PostgreSQL; no browser storage.
  * Sidebar shows all sessions; delete in UI deletes from DB synchronously.

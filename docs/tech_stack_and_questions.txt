@@ -1,0 +1,101 @@
+# docs/ — supplemental reference (tech stack + sample DB/RAG questions)
+================================================================================
+AGENTIC NODE — TECH STACK, DATABASE QUESTIONS (CHARTS), AND RAG QUESTIONS
+================================================================================
+Source: PROJECT_SUMMARY.md, seed.sql, backend/uploads/44a6713e6ee6_Global Travel Policy .pdf
+================================================================================
+
+--------------------------------------------------------------------------------
+1. TECHNOLOGY STACK (one-line description each)
+--------------------------------------------------------------------------------
+
+Backend
+  Python 3.11              — Runtime for the backend application.
+  FastAPI                  — High-performance web framework for building the REST API.
+  Uvicorn                  — ASGI server used to run the FastAPI app.
+  pydantic-settings        — Configuration loaded from environment and .env files.
+  OpenAI API (gpt-4o-mini) — LLM used for intent classification, SQL generation, chart recommendation, and final responses.
+  LangGraph                — Orchestration framework for the query pipeline (intent → SQL / RAG / reply).
+  LangChain Core           — Foundation library for LangGraph and chain components.
+  PostgreSQL               — Relational database for chat sessions, messages, and analytics (departments, employees, sales, projects).
+  SQLAlchemy 2.x           — ORM and database toolkit for PostgreSQL.
+  psycopg2-binary          — PostgreSQL database adapter for Python.
+  ChromaDB                 — Persistent vector store for RAG document embeddings.
+  OpenAI text-embedding-3-small — Embedding model for document chunks in RAG.
+  Matplotlib               — Library used to generate bar, line, and pie charts.
+  pandas                   — Data manipulation for query results and chart data.
+  numpy                    — Numerical operations used in chart and data processing.
+  pypdf                    — PDF text extraction for uploaded documents.
+  python-docx              — DOCX text extraction for uploaded documents.
+
+Frontend
+  HTML / CSS / JavaScript   — Static frontend with no build step; chat UI and layout.
+  GitHub Pages             — Hosting for the frontend artifact.
+
+Infrastructure & DevOps
+  Docker                   — Backend container image for deployment (e.g. Railway).
+  GitHub Actions           — Workflow for frontend deploy and BACKEND_URL injection.
+
+--------------------------------------------------------------------------------
+2. FIVE LEGITIMATE DATABASE QUESTIONS (good for charts)
+--------------------------------------------------------------------------------
+These questions can be asked in the app and answered using the analytics schema
+(departments, employees, salaries, projects, project_assignments, sales). Each
+is suitable for a chart (bar, line, or pie).
+
+  1. Show total sales by region as a bar chart.
+
+  2. What is the department-wise budget distribution? (Pie or bar chart.)
+
+  3. How many employees were hired each year? (Bar or line chart.)
+
+  4. Show total sales amount by product. (Bar chart.)
+
+  5. Which departments have the most active projects? (Bar chart.)
+
+--------------------------------------------------------------------------------
+3. RAG QUESTIONS FROM “GLOBAL TRAVEL POLICY” PDF
+--------------------------------------------------------------------------------
+The following questions are answerable from the document:
+  backend/uploads/44a6713e6ee6_Global Travel Policy .pdf
+(Global Travel Policy and Procedure — Kennametal Inc.)
+
+  • What is the purpose of the Global Travel Policy?
+
+  • What is the approval process for domestic air travel when using the online booking tool?
+
+  • What is the approval process for international air travel?
+
+  • What is the Lowest Logical Airfare criteria for selecting flights?
+
+  • When is premium economy seating permitted and reimbursable?
+
+  • When is business class travel allowed for non-ELT members?
+
+  • Is Airbnb or alternative housing allowed for business travel?
+
+  • Are room sharing and non-commercial stays (e.g. family home) reimbursable?
+
+  • Who should U.S. employees contact for passports and visas?
+
+  • What rental car insurance is required within the United States for business rentals?
+
+  • What rental car insurance is required outside the United States?
+
+  • What should I do if I need to change an air itinerary within 24 hours of departure?
+
+  • What happens to airline credits when a ticket is cancelled?
+
+  • Are spouse or guest travel expenses reimbursable?
+
+  • What ground transportation options are approved for reimbursement (e.g. taxi, Uber, rental car)?
+
+  • Is personal travel allowed to be booked through the online booking tool?
+
+  • How do I access the online booking tool for travel reservations?
+
+  • Which travel agency is approved for Kennametal business travel?
+
+================================================================================
+END OF FILE
+================================================================================

@@ -1,3 +1,4 @@
+-- backend/ — seed.sql: demo departments, employees, sales, projects for analytics.
 -- ============================================================
 -- Seed script for agentic_node database
 -- Tables: departments, employees, salaries, projects, sales

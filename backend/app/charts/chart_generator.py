@@ -1,3 +1,4 @@
+# charts/ — matplotlib chart generation for query results.
 """Generate matplotlib charts and return them as base64-encoded PNGs plus JSON data."""
 import io
 import base64

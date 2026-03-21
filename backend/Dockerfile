@@ -1,3 +1,4 @@
+# backend/ — Docker image for Railway (Python 3.11 + system deps).
 FROM python:3.11-slim
 
 WORKDIR /app

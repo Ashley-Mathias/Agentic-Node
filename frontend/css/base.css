@@ -1,3 +1,4 @@
+/* frontend/css/ — shared layout, theme variables, and responsive rules. */
 /* Layout and theme variables – Agentic Node brand (dusty rose + black) */
 :root {
   --sidebar-width: 272px;

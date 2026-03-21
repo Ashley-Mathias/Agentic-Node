@@ -1,3 +1,4 @@
+# models/ — Pydantic request/response models for API bodies.
 from typing import List, Literal
 
 from pydantic import BaseModel, Field

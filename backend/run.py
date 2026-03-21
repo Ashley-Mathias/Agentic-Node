@@ -1,3 +1,4 @@
+# backend/ — service entrypoint (uvicorn); Railway uses PORT.
 """
 Start the FastAPI app on the port Railway provides (PORT env var).
 Ensures we always listen on 0.0.0.0 and the correct port.

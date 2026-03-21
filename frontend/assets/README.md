@@ -1,4 +1,5 @@
 # Assets
+<!-- frontend/assets/ — images and static files referenced by CSS/HTML -->
 
 Place the **Agentic Node logo image** (the one with the node icon and "AGENTIC NODE" text on dusty rose background) here as:
 

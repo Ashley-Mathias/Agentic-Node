@@ -1,3 +1,4 @@
+# app/ — FastAPI application factory, CORS, and route registration.
 import logging
 import os
 from contextlib import asynccontextmanager

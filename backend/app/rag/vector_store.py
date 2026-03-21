@@ -1,3 +1,4 @@
+# rag/ — ChromaDB collections, embeddings, and document ingestion.
 import logging
 
 import chromadb

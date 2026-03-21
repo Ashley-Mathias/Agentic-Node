@@ -1,3 +1,4 @@
+# langgraph/ — LangGraph StateGraph, compiled pipeline, and AnalystState.
 """
 LangGraph pipeline that orchestrates the full AI Data Analyst workflow.
 

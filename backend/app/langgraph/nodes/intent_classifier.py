@@ -1,4 +1,5 @@
 import json
+# nodes/ — LangGraph node callables (intent, SQL, charts, RAG, response).
 import logging
 
 from app.config import get_openai_client, get_settings

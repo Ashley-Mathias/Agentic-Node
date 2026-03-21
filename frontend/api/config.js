@@ -1,3 +1,4 @@
+// frontend/api/ — optional edge/serverless helper to inject window.API_BASE.
 /**
  * Vercel serverless function: returns a script that sets window.API_BASE.
  * Set env var API_BASE (or BACKEND_URL) in Vercel project settings to your FastAPI backend URL.
