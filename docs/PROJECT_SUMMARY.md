@@ -1,3 +1,4 @@
+<!-- docs/ — primary technical reference for Agentic Node -->
 # Agentic Node — Technical and Project Summary
 
 A minute-level technical and functional summary of the Agentic Node application.
