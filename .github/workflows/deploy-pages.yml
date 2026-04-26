@@ -26,7 +26,8 @@ jobs:
         run: |
           BACKEND_URL="${{ secrets.BACKEND_URL }}"
           if [ -z "$BACKEND_URL" ]; then
-            echo "::warning::BACKEND_URL secret not set. Add your Railway backend URL in repo Settings > Secrets > Actions."
+            echo "::error::BACKEND_URL secret is not set. GitHub Pages will call localhost and chat sessions will fail."
+            echo "Add your Railway HTTPS URL in: Repo Settings > Secrets and variables > Actions > New repository secret (name BACKEND_URL)."
             BACKEND_URL="https://REPLACE_ME.railway.app"
           fi
           # Replace only the assignment (not the fallback check) so we don't overwrite the real URL with localhost

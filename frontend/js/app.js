@@ -134,8 +134,12 @@ function sendQuery(question) {
         sendBtn.disabled = false;
         refreshSessions();
       });
-  }).catch(() => {
-    chatUI.replaceLoadingWithResponse(loadingEl, { error: "Could not create session", summary: "" });
+  }).catch((err) => {
+    const detail =
+      err && err.message
+        ? err.message
+        : "Network or server error. Check API_BASE (Railway URL), GitHub BACKEND_URL secret, and that the backend is running.";
+    chatUI.replaceLoadingWithResponse(loadingEl, { error: "Could not create session: " + detail, summary: "" });
     conversationHistory.pop();
     sendBtn.disabled = false;
   });
